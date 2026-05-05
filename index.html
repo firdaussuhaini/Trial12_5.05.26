@@ -589,8 +589,9 @@ function calc() {
 
         const Ib = phase === 1? MD / (VOLT_1PH * globalPF) : MD / (1.732 * VOLT_3PH * globalPF);
         
-        let mainMCBSize = breakers.find(b => b >= Ib) || 125; 
-        if (mainMCBSize < 40) mainMCBSize = 40; 
+        // FIX: Hadkan pilihan Main Switch kepada saiz pasaran lazim Malaysia sahaja
+        const mainSwitchMarketSizes = [40, 63, 100, 125];
+        let mainMCBSize = mainSwitchMarketSizes.find(b => b >= Ib) || 125;
 
         const mainCableCandidates = Object.keys(mvAM_1ph).map(parseFloat).sort((a,b)=>a-b);
         let mainCable = phase === 1 ? 10.0 : 16.0; 
